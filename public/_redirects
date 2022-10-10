@@ -1,2 +1,2 @@
-/api/* https://whispering-thicket-82174.herokuapp.com/:splat 200
+/api/* https://whispering-thicket-82174.herokuapp.com/api/:splat 200
 /*     /index.html                                  200
