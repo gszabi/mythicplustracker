@@ -49,7 +49,7 @@ function Home(props: {
     // mythic_plus_alternate_runs%2Cmythic_plus_weekly_highest_level_runs%2C
     // mythic_plus_previous_weekly_highest_level_runs%2Cmythic_plus_scores_by_season%3Acurrent
     useEffect(() => {
-        props.setIsLoaded(true);
+        props.setIsLoaded(false);
         console.log('getting char info', props.isLoggedIn);
         if (!props.isLoggedIn) {
             if (localStorage.getItem('characters')) {
