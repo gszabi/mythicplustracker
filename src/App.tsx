@@ -59,6 +59,7 @@ function App() {
 
     useEffect(() => {
         console.log('here1111');
+        setIsLoaded(false);
         axios
             .post(
                 '/user',
@@ -71,9 +72,8 @@ function App() {
             .then((response) => {
                 if (response.data) {
                     setIsLoggedIn(true);
-                } else {
-                    setIsLoaded(true);
                 }
+                setIsLoaded(true);
             });
     }, []);
 
