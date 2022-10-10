@@ -33,7 +33,7 @@ function Home(props: {
     useLocalStorage: boolean;
     isLoaded: boolean;
     setUseLocalStorage: Function;
-    setIsLoaded: Function;
+    1: Function;
     firstTime: boolean;
 }) {
     const [characters, setCharacters] = useState<Character[]>([]);
@@ -49,7 +49,6 @@ function Home(props: {
     // mythic_plus_alternate_runs%2Cmythic_plus_weekly_highest_level_runs%2C
     // mythic_plus_previous_weekly_highest_level_runs%2Cmythic_plus_scores_by_season%3Acurrent
     useEffect(() => {
-        props.setIsLoaded(false);
         console.log('getting char info', props.isLoggedIn);
         if (!props.isLoggedIn) {
             if (localStorage.getItem('characters')) {
@@ -61,7 +60,7 @@ function Home(props: {
                     getCharRioInfo(c.characterName, c.realm, c.region);
                 });
                 setCharacters(JSON.parse(localStorage.getItem('characters')!));
-                props.setIsLoaded(true);
+                setAreCharactersLoaded(true);
             }
         } else {
             axios
@@ -83,7 +82,7 @@ function Home(props: {
                         );
                         setCharacters((prevState) => [...prevState, character]);
                     });
-                    props.setIsLoaded(true);
+                    setAreCharactersLoaded(true);
                 });
         }
     }, [props.isLoggedIn]);
@@ -315,13 +314,15 @@ function Home(props: {
         setRegion(event.target.value);
     };
 
+    const [areCharactersLoaded, setAreCharactersLoaded] = useState(false);
+
     const [characterName, setCharacterName] = useState('');
     const [realm, setRealm] = useState('');
     const [region, setRegion] = useState('EU');
 
     return (
         <>
-            {props.isLoaded ? (
+            {areCharactersLoaded ? (
                 <div className="home">
                     {characters.length > 0 ? (
                         <HomeWithCharacters
