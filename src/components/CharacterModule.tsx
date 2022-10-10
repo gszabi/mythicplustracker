@@ -177,7 +177,7 @@ function CharacterModule(props: {
     const completeVaultRuns = (weeklyRuns: DungeonRun[]) => {
         const completedRuns: DungeonRun[] = [];
 
-        if (weeklyRuns.length >= 7) {
+        if (weeklyRuns.length >= 8) {
             completedRuns.push(...weeklyRuns.slice(0, 8));
         } else {
             completedRuns.push(...weeklyRuns);

@@ -346,7 +346,7 @@ path {
 
 @media all and (max-height: 1000px) {
     .centered-element {
-        top: 60%;
+        top: 65%;
     }
 
     .centered-buttons-container {
