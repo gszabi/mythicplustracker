@@ -79,8 +79,8 @@ function Home(props: {
                             character.region
                         );
                         setCharacters((prevState) => [...prevState, character]);
-                        props.setIsLoaded(true);
                     });
+                    props.setIsLoaded(true);
                 });
         }
     }, [props.isLoggedIn]);
