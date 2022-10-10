@@ -59,8 +59,8 @@ function Home(props: {
                     getCharRioInfo(c.characterName, c.realm, c.region);
                 });
                 setCharacters(JSON.parse(localStorage.getItem('characters')!));
-                setAreCharactersLoaded(true);
             }
+            setAreCharactersLoaded(true);
         } else {
             axios
                 .post(
