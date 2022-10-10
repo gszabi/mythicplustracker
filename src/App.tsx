@@ -91,6 +91,7 @@ function App() {
                                         setIsLoggedIn={setIsLoggedIn}
                                         useLocalStorage={useLocalStorage}
                                         setUseLocalStorage={setUseLocalStorage}
+                                        isLoaded={isLoaded}
                                         setIsLoaded={setIsLoaded}
                                         firstTime={firstTime}
                                     />

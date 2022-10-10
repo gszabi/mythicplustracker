@@ -31,6 +31,7 @@ function Home(props: {
     isLoggedIn: boolean;
     setIsLoggedIn: Function;
     useLocalStorage: boolean;
+    isLoaded: boolean;
     setUseLocalStorage: Function;
     setIsLoaded: Function;
     firstTime: boolean;
@@ -317,47 +318,53 @@ function Home(props: {
     const [region, setRegion] = useState('EU');
 
     return (
-        <div className="home">
-            {characters.length > 0 ? (
-                <HomeWithCharacters
-                    isLoggedIn={props.isLoggedIn}
-                    setIsLoggedIn={props.setIsLoggedIn}
-                    useLocalStorage={props.useLocalStorage}
-                    setUseLocalStorage={props.setUseLocalStorage}
-                    firstTime={props.firstTime}
-                    logOut={logOut}
-                    characterName={characterName}
-                    validCharacter={validCharacter}
-                    setCharacterName={setCharacterName}
-                    realm={realm}
-                    setRealm={setRealm}
-                    region={region}
-                    handleRegionChange={handleRegionChange}
-                    handleAddCharacter={handleAddCharacter}
-                    characters={characters}
-                    setCharacters={setCharacters}
-                    displayCharacters={displayCharacters}
-                />
+        <>
+            {props.isLoaded ? (
+                <div className="home">
+                    {characters.length > 0 ? (
+                        <HomeWithCharacters
+                            isLoggedIn={props.isLoggedIn}
+                            setIsLoggedIn={props.setIsLoggedIn}
+                            useLocalStorage={props.useLocalStorage}
+                            setUseLocalStorage={props.setUseLocalStorage}
+                            firstTime={props.firstTime}
+                            logOut={logOut}
+                            characterName={characterName}
+                            validCharacter={validCharacter}
+                            setCharacterName={setCharacterName}
+                            realm={realm}
+                            setRealm={setRealm}
+                            region={region}
+                            handleRegionChange={handleRegionChange}
+                            handleAddCharacter={handleAddCharacter}
+                            characters={characters}
+                            setCharacters={setCharacters}
+                            displayCharacters={displayCharacters}
+                        />
+                    ) : (
+                        <HomeWithoutCharacters
+                            isLoggedIn={props.isLoggedIn}
+                            setIsLoggedIn={props.setIsLoggedIn}
+                            useLocalStorage={props.useLocalStorage}
+                            setUseLocalStorage={props.setUseLocalStorage}
+                            firstTime={props.firstTime}
+                            logOut={logOut}
+                            characterName={characterName}
+                            validCharacter={validCharacter}
+                            setCharacterName={setCharacterName}
+                            realm={realm}
+                            setRealm={setRealm}
+                            region={region}
+                            handleRegionChange={handleRegionChange}
+                            handleAddCharacter={handleAddCharacter}
+                            characters={characters}
+                        />
+                    )}
+                </div>
             ) : (
-                <HomeWithoutCharacters
-                    isLoggedIn={props.isLoggedIn}
-                    setIsLoggedIn={props.setIsLoggedIn}
-                    useLocalStorage={props.useLocalStorage}
-                    setUseLocalStorage={props.setUseLocalStorage}
-                    firstTime={props.firstTime}
-                    logOut={logOut}
-                    characterName={characterName}
-                    validCharacter={validCharacter}
-                    setCharacterName={setCharacterName}
-                    realm={realm}
-                    setRealm={setRealm}
-                    region={region}
-                    handleRegionChange={handleRegionChange}
-                    handleAddCharacter={handleAddCharacter}
-                    characters={characters}
-                />
+                ''
             )}
-        </div>
+        </>
     );
 }
 
