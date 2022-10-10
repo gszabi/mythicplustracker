@@ -32,6 +32,7 @@ function Home(props: {
     setIsLoggedIn: Function;
     useLocalStorage: boolean;
     setUseLocalStorage: Function;
+    setIsLoaded: Function;
     firstTime: boolean;
 }) {
     const [characters, setCharacters] = useState<Character[]>([]);
@@ -78,6 +79,7 @@ function Home(props: {
                             character.region
                         );
                         setCharacters((prevState) => [...prevState, character]);
+                        props.setIsLoaded(true);
                     });
                 });
         }

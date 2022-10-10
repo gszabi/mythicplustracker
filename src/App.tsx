@@ -71,8 +71,9 @@ function App() {
             .then((response) => {
                 if (response.data) {
                     setIsLoggedIn(true);
+                } else {
+                    setIsLoaded(true);
                 }
-                setIsLoaded(true);
             });
     }, []);
 
@@ -90,6 +91,7 @@ function App() {
                                         setIsLoggedIn={setIsLoggedIn}
                                         useLocalStorage={useLocalStorage}
                                         setUseLocalStorage={setUseLocalStorage}
+                                        setIsLoaded={setIsLoaded}
                                         firstTime={firstTime}
                                     />
                                 }
