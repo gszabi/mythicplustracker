@@ -33,7 +33,6 @@ function Home(props: {
     useLocalStorage: boolean;
     isLoaded: boolean;
     setUseLocalStorage: Function;
-    1: Function;
     firstTime: boolean;
 }) {
     const [characters, setCharacters] = useState<Character[]>([]);

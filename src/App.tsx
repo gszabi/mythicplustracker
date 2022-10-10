@@ -92,7 +92,6 @@ function App() {
                                         useLocalStorage={useLocalStorage}
                                         setUseLocalStorage={setUseLocalStorage}
                                         isLoaded={isLoaded}
-                                        setIsLoaded={setIsLoaded}
                                         firstTime={firstTime}
                                     />
                                 }
