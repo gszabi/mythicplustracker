@@ -27,14 +27,7 @@ interface User {
     email: string;
 }
 
-function Home(props: {
-    isLoggedIn: boolean;
-    setIsLoggedIn: Function;
-    useLocalStorage: boolean;
-    isLoaded: boolean;
-    setUseLocalStorage: Function;
-    firstTime: boolean;
-}) {
+function Home(props: { isLoaded: boolean; firstTime: boolean }) {
     const [characters, setCharacters] = useState<Character[]>([]);
     const [validCharacter, setValidCharacter] = useState(true);
 
@@ -48,43 +41,18 @@ function Home(props: {
     // mythic_plus_alternate_runs%2Cmythic_plus_weekly_highest_level_runs%2C
     // mythic_plus_previous_weekly_highest_level_runs%2Cmythic_plus_scores_by_season%3Acurrent
     useEffect(() => {
-        console.log('getting char info', props.isLoggedIn);
-        if (!props.isLoggedIn) {
-            if (localStorage.getItem('characters')) {
-                console.log(localStorage.getItem('characters'));
-                const char: Character[] = JSON.parse(
-                    localStorage.getItem('characters')!
-                );
-                char.forEach((c: Character) => {
-                    getCharRioInfo(c.characterName, c.realm, c.region);
-                });
-                setCharacters(JSON.parse(localStorage.getItem('characters')!));
-            }
-            setAreCharactersLoaded(true);
-        } else {
-            axios
-                .post(
-                    '/getCharacters',
-                    {},
-                    {
-                        headers: { 'Content-Type': 'application/json' },
-                        withCredentials: true,
-                    }
-                )
-                .then((response) => {
-                    setCharacters([]);
-                    response.data.forEach((character: Character) => {
-                        getCharRioInfo(
-                            character.characterName,
-                            character.realm,
-                            character.region
-                        );
-                        setCharacters((prevState) => [...prevState, character]);
-                    });
-                    setAreCharactersLoaded(true);
-                });
+        if (localStorage.getItem('characters')) {
+            console.log(localStorage.getItem('characters'));
+            const char: Character[] = JSON.parse(
+                localStorage.getItem('characters')!
+            );
+            char.forEach((c: Character) => {
+                getCharRioInfo(c.characterName, c.realm, c.region);
+            });
+            setCharacters(JSON.parse(localStorage.getItem('characters')!));
         }
-    }, [props.isLoggedIn]);
+        setAreCharactersLoaded(true);
+    }, []);
 
     const isCharacterAlreadyAdded = (char?: Character) => {
         const charName = char ? char.characterName : characterName;
@@ -92,13 +60,11 @@ function Home(props: {
         const charRegion = char ? char.region : region;
         if (
             characters.some((char) => {
-                if (
+                return (
                     char.characterName === charName &&
                     char.region === charRegion &&
                     char.realm === charRealm
-                ) {
-                    return true;
-                }
+                );
             })
         ) {
             return true;
@@ -209,7 +175,6 @@ function Home(props: {
 
     const handleAddCharacter = () => {
         console.log(characterName);
-
         axios
             .get(
                 'https://raider.io/api/v1/characters/profile?region=' +
@@ -240,72 +205,33 @@ function Home(props: {
                         region: region,
                     },
                 ]);
-                if (!props.isLoggedIn) {
-                    if (localStorage.getItem('characters')) {
-                        localStorage.setItem(
-                            'characters',
-                            JSON.stringify([
-                                ...JSON.parse(
-                                    localStorage.getItem('characters')!
-                                ),
-                                {
-                                    characterName: characterName,
-                                    realm: realm,
-                                    region: region,
-                                },
-                            ])
-                        );
-                    } else {
-                        localStorage.setItem(
-                            'characters',
-                            JSON.stringify([
-                                {
-                                    characterName: characterName,
-                                    realm: realm,
-                                    region: region,
-                                },
-                            ])
-                        );
-                    }
+                if (localStorage.getItem('characters')) {
+                    localStorage.setItem(
+                        'characters',
+                        JSON.stringify([
+                            ...JSON.parse(localStorage.getItem('characters')!),
+                            {
+                                characterName: characterName,
+                                realm: realm,
+                                region: region,
+                            },
+                        ])
+                    );
                 } else {
-                    try {
-                        axios
-                            .post(
-                                ADD_CHARACTER,
-                                {
-                                    characterName: characterName,
-                                    realm: realm,
-                                    region: region,
-                                },
-                                {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    withCredentials: true,
-                                }
-                            )
-                            .then((r) => console.log(r));
-                    } catch (err: any) {}
+                    localStorage.setItem(
+                        'characters',
+                        JSON.stringify([
+                            {
+                                characterName: characterName,
+                                realm: realm,
+                                region: region,
+                            },
+                        ])
+                    );
                 }
             })
             .catch((error) => {
                 setValidCharacter(false);
-            });
-    };
-
-    const logOut = () => {
-        axios
-            .post(
-                '/logout',
-                {},
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true,
-                }
-            )
-            .then((r) => {
-                props.setIsLoggedIn(false);
-                window.location.reload();
             });
     };
 
@@ -325,12 +251,7 @@ function Home(props: {
                 <div className="home">
                     {characters.length > 0 ? (
                         <HomeWithCharacters
-                            isLoggedIn={props.isLoggedIn}
-                            setIsLoggedIn={props.setIsLoggedIn}
-                            useLocalStorage={props.useLocalStorage}
-                            setUseLocalStorage={props.setUseLocalStorage}
                             firstTime={props.firstTime}
-                            logOut={logOut}
                             characterName={characterName}
                             validCharacter={validCharacter}
                             setCharacterName={setCharacterName}
@@ -345,12 +266,7 @@ function Home(props: {
                         />
                     ) : (
                         <HomeWithoutCharacters
-                            isLoggedIn={props.isLoggedIn}
-                            setIsLoggedIn={props.setIsLoggedIn}
-                            useLocalStorage={props.useLocalStorage}
-                            setUseLocalStorage={props.setUseLocalStorage}
                             firstTime={props.firstTime}
-                            logOut={logOut}
                             characterName={characterName}
                             validCharacter={validCharacter}
                             setCharacterName={setCharacterName}

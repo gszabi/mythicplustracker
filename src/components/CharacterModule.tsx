@@ -12,7 +12,6 @@ import Tooltip from '@mui/material/Tooltip';
 import CharacterModuleWeekly from './CharacterModuleWeekly';
 import { Modal, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import axios from '../axios';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -29,9 +28,9 @@ const style = {
 const DELETE_CHARACTER = '/deleteCharacter';
 
 function CharacterModule(props: {
+    double: boolean;
     characters: Character[];
     setCharacters: Function;
-    isLoggedIn: boolean;
     displayCharacter: DisplayCharacter;
     type: string;
     dungeonRuns: DungeonRun[];
@@ -59,41 +58,20 @@ function CharacterModule(props: {
         realm: string,
         region: string
     ) => {
-        axios
-            .post(
-                DELETE_CHARACTER,
-                {
-                    characterName: characterName,
-                    realm: realm,
-                    region: region.toUpperCase(),
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    withCredentials: true,
-                }
-            )
-            .then((r) => {
-                //props.setCharacters(localStorageCharacters);
-                const deletedCharacter = JSON.parse(
-                    JSON.stringify(props.characters)
-                );
-                for (let i = deletedCharacter.length - 1; i >= 0; --i) {
-                    if (
-                        deletedCharacter[i].characterName ===
-                            props.displayCharacter.name &&
-                        deletedCharacter[i].realm ===
-                            props.displayCharacter.realm &&
-                        deletedCharacter[i].region.toLowerCase() ===
-                            props.displayCharacter.region.toLowerCase()
-                    ) {
-                        deletedCharacter.splice(i, 1);
-                    }
-                }
-                props.setCharacters(deletedCharacter);
-                console.log('DELETED', r);
-            });
+        //props.setCharacters(localStorageCharacters);
+        const deletedCharacter = JSON.parse(JSON.stringify(props.characters));
+        for (let i = deletedCharacter.length - 1; i >= 0; --i) {
+            if (
+                deletedCharacter[i].characterName ===
+                    props.displayCharacter.name &&
+                deletedCharacter[i].realm === props.displayCharacter.realm &&
+                deletedCharacter[i].region.toLowerCase() ===
+                    props.displayCharacter.region.toLowerCase()
+            ) {
+                deletedCharacter.splice(i, 1);
+            }
+        }
+        props.setCharacters(deletedCharacter);
     };
 
     const getTyranical = () => {
@@ -125,7 +103,6 @@ function CharacterModule(props: {
                 });
             }
         });
-        console.log('tyr', tyranical);
         return tyranical;
     };
 
@@ -157,7 +134,6 @@ function CharacterModule(props: {
                 });
             }
         });
-        console.log('fort', tyranical);
         return tyranical;
     };
 
@@ -209,40 +185,33 @@ function CharacterModule(props: {
     }, [props.type]);
 
     const handleModalYesClick = () => {
-        if (props.isLoggedIn) {
-            deleteCharacter(
-                props.displayCharacter.name,
-                props.displayCharacter.realm,
-                props.displayCharacter.region
-            );
-        } else {
-            const localStorageCharacters = JSON.parse(
-                localStorage.getItem('characters') || ''
-            );
+        const localStorageCharacters = JSON.parse(
+            localStorage.getItem('characters') || ''
+        );
 
-            for (var i = localStorageCharacters.length - 1; i >= 0; --i) {
-                if (
-                    localStorageCharacters[i].characterName ===
-                        props.displayCharacter.name &&
-                    localStorageCharacters[i].realm ===
-                        props.displayCharacter.realm &&
-                    localStorageCharacters[i].region.toLowerCase() ===
-                        props.displayCharacter.region.toLowerCase()
-                ) {
-                    localStorageCharacters.splice(i, 1);
-                }
+        for (var i = localStorageCharacters.length - 1; i >= 0; --i) {
+            if (
+                localStorageCharacters[i].characterName ===
+                    props.displayCharacter.name &&
+                localStorageCharacters[i].realm ===
+                    props.displayCharacter.realm &&
+                localStorageCharacters[i].region.toLowerCase() ===
+                    props.displayCharacter.region.toLowerCase()
+            ) {
+                localStorageCharacters.splice(i, 1);
             }
-
-            localStorage.setItem(
-                'characters',
-                JSON.stringify(localStorageCharacters)
-            );
-
-            props.setCharacters(localStorageCharacters);
-
-            setOpen(false);
         }
+
+        localStorage.setItem(
+            'characters',
+            JSON.stringify(localStorageCharacters)
+        );
+
+        props.setCharacters(localStorageCharacters);
+
+        setOpen(false);
     };
+
     const handleModalNoClick = () => {
         setOpen(false);
     };
@@ -259,6 +228,7 @@ function CharacterModule(props: {
                 display: 'flex',
                 justifyContent: 'center',
             }}
+            className={'inner-character'}
         >
             <Modal
                 open={open}
@@ -292,7 +262,7 @@ function CharacterModule(props: {
                     </Box>
                 </>
             </Modal>
-            <div className={'ceva'}>
+            <div className={'ceva ' + (props.double ? 'double' : '')}>
                 <div
                     className={
                         'altceva ' + (props.type === 'Overall' ? 'overall' : '')
@@ -323,8 +293,8 @@ function CharacterModule(props: {
                             'char-thumbnail-padding ' +
                             (props.type === 'Overall' ? 'overall' : '')
                         }
-                        width={props.type === 'Overall' ? '100px' : '50px'}
-                        height={props.type === 'Overall' ? '100px' : '50px'}
+                        width={props.type === 'Overall' ? '75px' : '75px'}
+                        height={props.type === 'Overall' ? '75px' : '75px'}
                         alt="error"
                         src={props.displayCharacter.thumbnailUrl}
                     />

@@ -57,12 +57,7 @@ const StyledAutocomplete = styled(Autocomplete)({
 });
 
 function HomeWithCharacters(props: {
-    isLoggedIn: boolean;
-    setIsLoggedIn: Function;
-    useLocalStorage: boolean;
-    setUseLocalStorage: Function;
     firstTime: boolean;
-    logOut: React.MouseEventHandler<HTMLButtonElement>;
     validCharacter: boolean;
     characterName: string;
     setCharacterName: Function;
@@ -75,12 +70,6 @@ function HomeWithCharacters(props: {
     setCharacters: Function;
     displayCharacters: DisplayCharacter[];
 }) {
-    const navigate = useNavigate();
-    const handleIt = () => {
-        props.setUseLocalStorage(false);
-        navigate('/register');
-    };
-
     const handleStatChange = (selectedStat: string) => {
         setSelectedStat(selectedStat);
         localStorage.setItem('selectedStat', selectedStat);
@@ -99,6 +88,7 @@ function HomeWithCharacters(props: {
             setShowMenu(false);
         }
     }, []);
+
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1360) {
@@ -206,26 +196,6 @@ function HomeWithCharacters(props: {
                             Add
                         </button>
                     </div>
-
-                    <div className={'input-container-nav logout'}>
-                        {!props.isLoggedIn ? (
-                            <button
-                                className={
-                                    'button logout-create-acc create-acc'
-                                }
-                                onClick={handleIt}
-                            >
-                                Create an account
-                            </button>
-                        ) : (
-                            <button
-                                className={'button logout-create-acc'}
-                                onClick={props.logOut}
-                            >
-                                Log Out
-                            </button>
-                        )}
-                    </div>
                 </div>
             </div>
             <div className={'page-content'}>
@@ -258,37 +228,48 @@ function HomeWithCharacters(props: {
                         Last Week
                     </button>
                 </div>
+                <div className={'characters-container'}>
+                    <div
+                        className={
+                            'characters ' +
+                            (props.characters.length > 5 ? 'double' : '')
+                        }
+                    >
+                        {props.characters.map((char) => {
+                            let c: any = props.displayCharacters.find((o) => {
+                                return (
+                                    o.name === char.characterName &&
+                                    o.realm === char.realm &&
+                                    o.region === char.region.toLowerCase()
+                                );
+                            })!;
 
-                <>
-                    {props.characters.map((char) => {
-                        let c: any = props.displayCharacters.find((o) => {
-                            return (
-                                o.name === char.characterName &&
-                                o.realm === char.realm &&
-                                o.region === char.region.toLowerCase()
+                            return c ? (
+                                <div
+                                    className={'character'}
+                                    key={
+                                        c.name + c.realm + c.region + 'highest'
+                                    }
+                                >
+                                    <CharacterModule
+                                        characters={props.characters}
+                                        setCharacters={props.setCharacters}
+                                        displayCharacter={c}
+                                        double={props.characters.length > 5}
+                                        dungeonRuns={c.bestRuns}
+                                        bestRuns={c.bestRuns}
+                                        currentWeekRuns={c.currentWeekRuns}
+                                        previousWeekRuns={c.previousWeekRuns}
+                                        type={selectedStat}
+                                        alternateRuns={c.alternateRuns}
+                                    />
+                                </div>
+                            ) : (
+                                ''
                             );
-                        })!;
-
-                        return c ? (
-                            <div key={c.name + c.realm + c.region + 'highest'}>
-                                <CharacterModule
-                                    isLoggedIn={props.isLoggedIn}
-                                    characters={props.characters}
-                                    setCharacters={props.setCharacters}
-                                    displayCharacter={c}
-                                    dungeonRuns={c.bestRuns}
-                                    bestRuns={c.bestRuns}
-                                    currentWeekRuns={c.currentWeekRuns}
-                                    previousWeekRuns={c.previousWeekRuns}
-                                    type={selectedStat}
-                                    alternateRuns={c.alternateRuns}
-                                />
-                            </div>
-                        ) : (
-                            ''
-                        );
-                    })}
-                </>
+                        })}
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -5,6 +5,23 @@
     //background: #1c1c1c;
 }
 
+.home {
+    margin-bottom: 100px;
+}
+
+
+.characters.double {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+
+}
+
+.character {
+    margin: 1em;
+}
+
 body {
 margin: 0;
 padding: 0;
@@ -192,6 +209,12 @@ path {
     font-weight: bold;
 }
 
+.run-name {
+    -webkit-text-stroke: 0.5px black;
+    font-weight: bold;
+    color: #ffffff;
+}
+
 .modal-button-container {
     display: flex;
     text-align: center;
@@ -222,8 +245,6 @@ path {
 
 .char-thumbnail-padding.overall {
     padding: 0;
-    width: 65px;
-    height: 65px;
 }
 
 @media all and (min-width: 1000px) and (orientation:landscape) {
@@ -241,8 +262,6 @@ path {
 
     .char-thumbnail-padding.overall {
         padding: 0;
-        width: 100px;
-        height: 100px;
     }
 
 }
@@ -370,7 +389,7 @@ path {
 
 
 /*LOGIN*/
-.login-kitty {
+.logo-kitty {
     width: 200px;
     position: absolute;
     margin-top: -118px;
@@ -524,7 +543,7 @@ path {
 
 .footer {
     bottom: 0;
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     text-align: center;
@@ -668,6 +687,9 @@ path {
         padding-right: 15px;
         flex: 1;
     }
+    .asdasdasd {
+        background-color: #ff16ff
+    }
     .run {
         text-align: center;
         width: 40px;
@@ -680,6 +702,15 @@ path {
         display: flex;
         justify-content: center;
         width: 65%;
+        flex-wrap: wrap;
+        padding: 10px;
+        background-color: #2F273A;
+    }
+
+    .ceva.double {
+        display: flex;
+        justify-content: center;
+        width: 98%;
         flex-wrap: wrap;
         padding: 10px;
         background-color: #2F273A;

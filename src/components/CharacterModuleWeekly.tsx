@@ -43,10 +43,10 @@ function CharacterModuleWeekly(props: {
     };
 
     const getTextColor = (level: string) => {
-        if (parseInt(level) >= 20) return 'orange';
-        if (parseInt(level) >= 15) return 'purple';
-        if (parseInt(level) >= 10) return 'blue';
-        if (parseInt(level) >= 5) return 'green';
+        if (parseInt(level) >= 20) return '#ffa82b';
+        if (parseInt(level) >= 15) return '#FF16FFFF';
+        if (parseInt(level) >= 10) return '#1645ff';
+        if (parseInt(level) >= 5) return '#14FF21FF';
         return 'white';
     };
 
@@ -95,20 +95,62 @@ function CharacterModuleWeekly(props: {
                                             'url("' +
                                             getImgFromName(run.shortName) +
                                             '")',
+                                        textAlign: 'inherit',
                                     }}
                                 >
                                     <span
-                                        className={'run-level'}
+                                        className={'run-name'}
                                         style={{
-                                            fontSize: '30px',
+                                            fontSize: '14px',
+                                            marginTop: '-10px',
+                                            position: 'absolute',
                                             background: 'none',
-                                            color: run.inTime
-                                                ? getTextColor(run.level)
-                                                : 'gray',
                                         }}
                                     >
-                                        {run.level}
+                                        {run.shortName}
                                     </span>
+
+                                    <div
+                                        style={{
+                                            textAlign: 'center',
+                                            display: 'grid',
+                                        }}
+                                    >
+                                        <span
+                                            className={'run-level'}
+                                            style={{
+                                                fontSize:
+                                                    props.type === 'Overall'
+                                                        ? '25px'
+                                                        : '30px',
+                                                background: 'none',
+                                                color: run.inTime
+                                                    ? getTextColor(run.level)
+                                                    : 'gray',
+                                            }}
+                                        >
+                                            {run.level}
+                                        </span>
+                                        {props.type === 'Overall' ? (
+                                            <span
+                                                className={'run-level'}
+                                                style={{
+                                                    fontSize: '15px',
+                                                    marginTop: '-10px',
+                                                    background: 'none',
+                                                    color: run.inTime
+                                                        ? getTextColor(
+                                                              run.level
+                                                          )
+                                                        : 'gray',
+                                                }}
+                                            >
+                                                {run.score}
+                                            </span>
+                                        ) : (
+                                            ' '
+                                        )}
+                                    </div>
                                 </div>
                             </a>
                         ) : (
@@ -122,20 +164,34 @@ function CharacterModuleWeekly(props: {
                                         'url("' +
                                         getImgFromName(run.shortName) +
                                         '")',
+                                    textAlign: 'inherit',
                                 }}
                             >
                                 <span
-                                    className={'run-level'}
+                                    className={'run-name'}
                                     style={{
-                                        fontSize: '30px',
+                                        fontSize: '14px',
+                                        marginTop: '-10px',
+                                        position: 'absolute',
                                         background: 'none',
-                                        color: run.inTime
-                                            ? getTextColor(run.level)
-                                            : 'gray',
                                     }}
                                 >
-                                    {run.level}
+                                    {run.shortName}
                                 </span>
+                                <div style={{ textAlign: 'center' }}>
+                                    <span
+                                        className={'run-level'}
+                                        style={{
+                                            fontSize: '25px',
+                                            background: 'none',
+                                            color: run.inTime
+                                                ? getTextColor(run.level)
+                                                : 'gray',
+                                        }}
+                                    >
+                                        {run.level}
+                                    </span>
+                                </div>
                             </div>
                         )}
                     </div>

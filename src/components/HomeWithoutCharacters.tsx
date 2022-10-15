@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect, ChangeEventHandler } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { ChangeEventHandler } from 'react';
 import { Character } from '../models/character-model';
 import realmsUS from '../utils/realmsUS';
 import realmsEU from '../utils/realmsEU';
@@ -8,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import Autocomplete from '@mui/material/Autocomplete';
 import logo from '../img/logo.png';
 import pumpkin from '../img/pumpkin.gif';
+import kitty from '../img/kitty_better.gif';
 
 const StyledAutocomplete = styled(Autocomplete)({
     '& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)': {
@@ -49,12 +49,7 @@ const StyledAutocomplete = styled(Autocomplete)({
 });
 
 function HomeWithoutCharacters(props: {
-    isLoggedIn: boolean;
-    setIsLoggedIn: Function;
-    useLocalStorage: boolean;
-    setUseLocalStorage: Function;
     firstTime: boolean;
-    logOut: React.MouseEventHandler<HTMLButtonElement>;
     validCharacter: boolean;
     characterName: string;
     setCharacterName: Function;
@@ -65,36 +60,14 @@ function HomeWithoutCharacters(props: {
     handleAddCharacter: React.MouseEventHandler<HTMLButtonElement>;
     characters: Character[];
 }) {
-    const navigate = useNavigate();
-    const goToRegister = () => {
-        props.setUseLocalStorage(false);
-        navigate('/register');
-    };
-    const goToLogin = () => {
-        props.setUseLocalStorage(false);
-        navigate('/login');
-    };
-
     return (
         <div className="without-characters form">
             <div className={'logo-container  no-margin'}>
                 <img className={'logo-img'} alt={'loading'} src={logo} />
                 <img className={'logo-pumpkin'} alt={'loading'} src={pumpkin} />
             </div>
-            {!props.isLoggedIn ? (
-                <div className={'centered-buttons-container'}>
-                    <button className="button register" onClick={goToRegister}>
-                        Register
-                    </button>
-                    <br />
-                    <button className="button login" onClick={goToLogin}>
-                        Login
-                    </button>
-                </div>
-            ) : (
-                ''
-            )}
             <div className="centered-element">
+                <img className={'logo-kitty'} src={kitty} />
                 <br />
                 <br />
                 <input
@@ -141,34 +114,12 @@ function HomeWithoutCharacters(props: {
                 />
                 <br />
                 <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                    {!props.isLoggedIn ? (
-                        <p className="warning-add-character">
-                            Without an account, character submissions might be
-                            lost
-                        </p>
-                    ) : (
-                        ''
-                    )}
                     <button
                         className="button submit"
                         onClick={props.handleAddCharacter}
                     >
                         Add
                     </button>
-                    {props.isLoggedIn ? (
-                        <>
-                            <br />
-                            <br />
-                            <button
-                                className="button logout"
-                                onClick={props.logOut}
-                            >
-                                Log Out
-                            </button>
-                        </>
-                    ) : (
-                        ''
-                    )}
                     <p
                         style={{
                             display: props.validCharacter ? 'none' : 'block',
