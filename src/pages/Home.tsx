@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import logo from './logo.svg';
 import '../App.css';
 import linkIcon from '../img/link.png';
-import axios from '.././axios';
+import axios from 'axios';
 import HomeWithCharacters from '../components/HomeWithCharacters';
 import HomeWithoutCharacters from '../components/HomeWithoutCharacters';
 import {
