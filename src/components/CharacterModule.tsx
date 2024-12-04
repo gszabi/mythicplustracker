@@ -95,13 +95,60 @@ function CharacterModule(props: {
             });
     };
 
+    const getTyranical = () => {
+        const tyranical: DungeonRun[] = [];
+        dgNames.forEach((name) => {
+            const bestRun = props.bestRuns!.find((run) => {
+                return run.shortName === name;
+            });
+            const alternateRun = props.alternateRuns!.find((run) => {
+                return run.shortName === name;
+            });
+
+            if (bestRun?.mainAffix === 'Tyrannical') {
+                bestRun.main = true;
+                tyranical.push(bestRun);
+            } else if (alternateRun?.mainAffix === 'Tyrannical') {
+                tyranical.push(alternateRun);
+            } else {
+                tyranical.push({
+                    wasDone: false,
+                    affixes: undefined,
+                    inTime: false,
+                    level: '0',
+                    mainAffix: '',
+                    name: '',
+                    score: '',
+                    shortName: name,
+                    url: '',
+                });
+            }
+        });
+        return tyranical;
+    };
+
     const getDgRuns = () => {
         const runs: DungeonRun[] = [];
         dgNames.forEach((name) => {
             const bestRun = props.bestRuns.find((run) => {
                 return run.shortName === name;
-            })!;
-            runs.push(bestRun);
+            });
+            if (!bestRun) {
+                runs.push({
+                    wasDone: false,
+                    affixes: undefined,
+                    inTime: false,
+                    level: '0',
+                    mainAffix: '',
+                    name: '',
+                    score: '',
+                    shortName: name,
+                    url: '',
+                })
+            } else {
+                runs.push(bestRun);
+            }
+
 
         });
         console.log('tyr', tyranical);
