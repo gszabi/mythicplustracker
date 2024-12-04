@@ -154,11 +154,12 @@ function Home(props: {
                     let currentWeekRuns = [] as DungeonRun[];
                     let previousWeekRuns = [] as DungeonRun[];
 
-                    response.data.mythic_plus_alternate_runs.forEach(
-                        (dgRun: any) => {
-                            alternateRuns.push(getInfoFromRun(dgRun));
-                        }
-                    );
+                    console.log('response', response);
+                    // response.data.mythic_plus_alternate_runs.forEach(
+                    //     (dgRun: any) => {
+                    //         alternateRuns.push(getInfoFromRun(dgRun));
+                    //     }
+                    // );
                     response.data.mythic_plus_best_runs.forEach(
                         (dgRun: any) => {
                             bestRuns.push(getInfoFromRun(dgRun));
@@ -180,7 +181,6 @@ function Home(props: {
                         }
                     );
 
-                    charToAdd.alternateRuns = [...alternateRuns];
                     charToAdd.bestRuns = [...bestRuns];
                     charToAdd.highestRuns = [...highestRuns];
                     charToAdd.currentWeekRuns = [...currentWeekRuns];

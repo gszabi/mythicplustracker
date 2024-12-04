@@ -40,18 +40,17 @@ function CharacterModule(props: {
     currentWeekRuns: DungeonRun[];
     previousWeekRuns: DungeonRun[];
 }) {
-    const [tyranicalRuns, setTyranicalRuns] = useState<DungeonRun[]>([]);
-    const [fortifiedRuns, setFortifiedRuns] = useState<DungeonRun[]>([]);
+    const [dgRuns, setDgRuns] = useState<DungeonRun[]>([]);
 
     const dgNames = [
-        'GMBT',
-        'YARD',
-        'ID',
-        'STRT',
-        'GD',
-        'WORK',
-        'UPPR',
-        'LOWR',
+        'DAWN',
+        'ARAK',
+        'MISTS',
+        'COT',
+        'NW',
+        'GB',
+        'SV',
+        'SIEGE',
     ];
 
     const deleteCharacter = (
@@ -96,81 +95,24 @@ function CharacterModule(props: {
             });
     };
 
-    const getTyranical = () => {
-        const tyranical: DungeonRun[] = [];
+    const getDgRuns = () => {
+        const runs: DungeonRun[] = [];
         dgNames.forEach((name) => {
-            const bestRun = props.bestRuns!.find((run) => {
+            const bestRun = props.bestRuns.find((run) => {
                 return run.shortName === name;
-            });
-            const alternateRun = props.alternateRuns!.find((run) => {
-                return run.shortName === name;
-            });
+            })!;
+            runs.push(bestRun);
 
-            if (bestRun?.mainAffix === 'Tyrannical') {
-                bestRun.main = true;
-                tyranical.push(bestRun);
-            } else if (alternateRun?.mainAffix === 'Tyrannical') {
-                tyranical.push(alternateRun);
-            } else {
-                tyranical.push({
-                    wasDone: false,
-                    affixes: undefined,
-                    inTime: false,
-                    level: '0',
-                    mainAffix: '',
-                    name: '',
-                    score: '',
-                    shortName: name,
-                    url: '',
-                });
-            }
         });
         console.log('tyr', tyranical);
-        return tyranical;
-    };
-
-    const getFortified = () => {
-        const tyranical: DungeonRun[] = [];
-        dgNames.forEach((name) => {
-            const bestRun = props.bestRuns!.find((run) => {
-                return run.shortName === name;
-            });
-            const alternateRun = props.alternateRuns!.find((run) => {
-                return run.shortName === name;
-            });
-            if (bestRun?.mainAffix === 'Fortified') {
-                bestRun.main = true;
-                tyranical.push(bestRun);
-            } else if (alternateRun?.mainAffix === 'Fortified') {
-                tyranical.push(alternateRun);
-            } else {
-                tyranical.push({
-                    wasDone: false,
-                    affixes: undefined,
-                    inTime: false,
-                    level: '0',
-                    mainAffix: '',
-                    name: '',
-                    score: '',
-                    shortName: name,
-                    url: '',
-                });
-            }
-        });
-        console.log('fort', tyranical);
-        return tyranical;
+        return runs;
     };
 
     useEffect(() => {
-        setFortifiedRuns(getFortified());
-        setTyranicalRuns(getTyranical());
+        setDgRuns(getDgRuns());
     }, []);
 
     const getTextColor = (level: number) => {
-        if (level >= 20) return 'orange';
-        if (level >= 15) return 'purple';
-        if (level >= 10) return 'blue';
-        if (level >= 5) return 'green';
         return 'white';
     };
 
@@ -370,15 +312,7 @@ function CharacterModule(props: {
                             <CharacterModuleWeekly
                                 displayCharacter={props.displayCharacter}
                                 type={props.type}
-                                dungeonRuns={tyranicalRuns}
-                                affixImg={tyranical}
-                            />
-
-                            <CharacterModuleWeekly
-                                displayCharacter={props.displayCharacter}
-                                type={props.type}
-                                dungeonRuns={fortifiedRuns}
-                                affixImg={fortified}
+                                dungeonRuns={dgRuns}
                             />
                         </>
                     ) : (

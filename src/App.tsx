@@ -74,7 +74,10 @@ function App() {
                     setIsLoggedIn(true);
                 }
                 setIsLoaded(true);
-            });
+            }).catch((error) => {
+                console.log(error);
+                setIsLoaded(true);
+        });
     }, []);
 
     return (

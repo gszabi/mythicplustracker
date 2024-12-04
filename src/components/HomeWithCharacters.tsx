@@ -206,26 +206,6 @@ function HomeWithCharacters(props: {
                             Add
                         </button>
                     </div>
-
-                    <div className={'input-container-nav logout'}>
-                        {!props.isLoggedIn ? (
-                            <button
-                                className={
-                                    'button logout-create-acc create-acc'
-                                }
-                                onClick={handleIt}
-                            >
-                                Create an account
-                            </button>
-                        ) : (
-                            <button
-                                className={'button logout-create-acc'}
-                                onClick={props.logOut}
-                            >
-                                Log Out
-                            </button>
-                        )}
-                    </div>
                 </div>
             </div>
             <div className={'page-content'}>

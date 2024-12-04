@@ -216,9 +216,6 @@ function Register(props: {
                         <span style={{ color: 'white' }}>
                             Already have an account?
                         </span>{' '}
-                        <Link to={'/login'} className={'link-auth'}>
-                            Login
-                        </Link>
                         <br />
                         <span style={{ color: 'white' }}>
                             Go back to home?

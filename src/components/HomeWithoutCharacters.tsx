@@ -81,19 +81,6 @@ function HomeWithoutCharacters(props: {
                 <img className={'logo-img'} alt={'loading'} src={logo} />
                 <img className={'logo-pumpkin'} alt={'loading'} src={pumpkin} />
             </div>
-            {!props.isLoggedIn ? (
-                <div className={'centered-buttons-container'}>
-                    <button className="button register" onClick={goToRegister}>
-                        Register
-                    </button>
-                    <br />
-                    <button className="button login" onClick={goToLogin}>
-                        Login
-                    </button>
-                </div>
-            ) : (
-                ''
-            )}
             <div className="centered-element">
                 <br />
                 <br />
@@ -141,14 +128,6 @@ function HomeWithoutCharacters(props: {
                 />
                 <br />
                 <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                    {!props.isLoggedIn ? (
-                        <p className="warning-add-character">
-                            Without an account, character submissions might be
-                            lost
-                        </p>
-                    ) : (
-                        ''
-                    )}
                     <button
                         className="button submit"
                         onClick={props.handleAddCharacter}

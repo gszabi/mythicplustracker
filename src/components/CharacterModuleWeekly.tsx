@@ -1,17 +1,15 @@
 import React from 'react';
 import { DisplayCharacter, DungeonRun } from '../models/character-model';
-import docks from '../img/docks.jpg';
-import gambit from '../img/gambit.jpg';
-import grimrail from '../img/grimrail.jpg';
-import junkyard from '../img/junkyard.jpg';
-import lower from '../img/lower.jpg';
-import streets from '../img/streets.jpg';
-import upper from '../img/upper.jpg';
-import workshop from '../img/workshop.jpg';
-import fortified from '../img/fortified.jpg';
+import dawnbreaker from '../img/dawnbreaker.jpg';
+import arakara from '../img/arakara.jpg';
+import mists from '../img/mists.jpg';
+import cot from '../img/city.jpg';
+import nw from '../img/necrotic.jpg';
+import gb from '../img/grimbatol.jpg';
+import sv from '../img/stonevault.jpg';
+import siege from '../img/siege.jpg';
 import questionmark from '../img/questionmark.jpg';
-import tyranical from '../img/tyranical.jpg';
-import Tooltip from '@mui/material/Tooltip';
+
 
 function CharacterModuleWeekly(props: {
     displayCharacter: DisplayCharacter;
@@ -21,32 +19,28 @@ function CharacterModuleWeekly(props: {
 }) {
     const getImgFromName = (name: string) => {
         switch (name) {
-            case 'GMBT':
-                return gambit;
-            case 'YARD':
-                return junkyard;
-            case 'ID':
-                return docks;
-            case 'STRT':
-                return streets;
-            case 'GD':
-                return grimrail;
-            case 'WORK':
-                return workshop;
-            case 'UPPR':
-                return upper;
-            case 'LOWR':
-                return lower;
+            case 'DAWN':
+                return dawnbreaker;
+            case 'ARAK':
+                return arakara;
+            case 'MISTS':
+                return mists;
+            case 'COT':
+                return cot;
+            case 'NW':
+                return nw;
+            case 'GB':
+                return gb;
+            case 'SV':
+                return sv;
+            case 'SIEGE':
+                return siege;
             default:
                 return questionmark;
         }
     };
 
     const getTextColor = (level: string) => {
-        if (parseInt(level) >= 20) return 'orange';
-        if (parseInt(level) >= 15) return 'purple';
-        if (parseInt(level) >= 10) return 'blue';
-        if (parseInt(level) >= 5) return 'green';
         return 'white';
     };
 
@@ -59,21 +53,9 @@ function CharacterModuleWeekly(props: {
 
     return (
         <div className={'runs'}>
-            {props.type === 'Overall' ? (
-                <div className={'run-container'}>
-                    <div
-                        className={'run header'}
-                        style={{
-                            backgroundImage: 'url("' + props.affixImg + '")',
-                        }}
-                    ></div>
-                </div>
-            ) : (
-                ''
-            )}
             {props.dungeonRuns.map((run, index) => {
                 return (
-                    <div
+                    <div title={run.score}
                         className={'run-container'}
                         key={run.name + props.displayCharacter.name + index}
                     >
@@ -100,7 +82,7 @@ function CharacterModuleWeekly(props: {
                                     <span
                                         className={'run-level'}
                                         style={{
-                                            fontSize: '30px',
+                                            fontSize: '42px',
                                             background: 'none',
                                             color: run.inTime
                                                 ? getTextColor(run.level)
@@ -127,7 +109,7 @@ function CharacterModuleWeekly(props: {
                                 <span
                                     className={'run-level'}
                                     style={{
-                                        fontSize: '30px',
+                                        fontSize: '42px',
                                         background: 'none',
                                         color: run.inTime
                                             ? getTextColor(run.level)
