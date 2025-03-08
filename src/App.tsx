@@ -140,31 +140,6 @@ function App() {
                     )}
                 </Fragment>
             </Router>
-            <div className={'footer'}>
-                <p className={'info'}>
-                    EMAIL: <p>drwonski.stream@gmail.com</p>
-                </p>
-                <p className={'info'}>
-                    Made by <p>Drownski</p>
-                </p>
-                <p className={'info'}>
-                    Powered by{' '}
-                    <p>
-                        <a href={'https://raider.io/'}>
-                            Raider.IO{' '}
-                            <img
-                                width={'15px'}
-                                style={{
-                                    position: 'absolute',
-                                    marginLeft: '5px',
-                                }}
-                                alt={'loading'}
-                                src={linkIcon}
-                            />
-                        </a>
-                    </p>
-                </p>
-            </div>
         </>
     );
 }
