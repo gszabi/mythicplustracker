@@ -197,7 +197,7 @@ function Home(props: {
     const getInfoFromRun = (dgRun: any) => {
         let run = {} as DungeonRun;
         run.affixes = [...dgRun.affixes];
-        run.mainAffix = dgRun.affixes[0].name;
+        run.mainAffix = dgRun.affixes[0] ? dgRun.affixes[0].name : '';
         run.name = dgRun.dungeon;
         run.shortName = dgRun.short_name;
         run.inTime = dgRun.clear_time_ms < dgRun.par_time_ms;

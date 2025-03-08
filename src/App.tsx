@@ -58,7 +58,6 @@ function App() {
     const [firstTime, setFirstTime] = useState(true);
 
     useEffect(() => {
-        console.log('here1111');
         setIsLoaded(false);
         axios
             .post(
